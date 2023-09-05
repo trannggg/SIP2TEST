@@ -1,4 +1,5 @@
 <?php
+require_once 'getData.php';
 // Thiết lập giới hạn thời gian và thời gian chờ vô hạn
 set_time_limit(0);
 ini_set('default_socket_timeout', -1);
@@ -24,17 +25,9 @@ while (true) {
 
         // Tách dữ liệu và checksum từ chuỗi
         list($data, $checksum) = explode("AY", $data);
-
-        // Tính checksum của dữ liệu
-        $computedChecksum = md5($data);
-
-        // So sánh checksum tính toán với checksum từ dữ liệu nhận được
-        if ($computedChecksum === $checksum) {
-            echo "Checksum is valid.\n";
-        } else {
-            echo "Invalid checksum.\n";
-        }
-
+        // Xử lý dữ liệu
+        $data1=getData($data);
+        print_r($data1);
         // Phản hồi tới client
         $response = "Server received: $data";
         socket_write($client_socket, $data, strlen($response));
