@@ -1,27 +1,19 @@
 <?php
-// Mảng PHP chứa dữ liệu
-$data['Login'] = array(
-    'UID Algorithm' => '93',
-    'PWD Algorithm' => '00',
-    'Login User ID' => 'add',
-    'Login Password' => '1234',
-    'Location Code' => '',
-    'Vendor Profile' => '3M'
-);
+function saveToJson($data){
+    // Chuyển đổi mảng thành chuỗi JSON
+    $jsonData = json_encode($data, JSON_PRETTY_PRINT);
 
-// Chuyển đổi mảng thành chuỗi JSON
-$jsonData = json_encode($data, JSON_PRETTY_PRINT);
+    // Lấy đường dẫn tới thư mục hiện tại
+    $currentDirectory = getcwd();
 
-// Lấy đường dẫn tới thư mục hiện tại
-$currentDirectory = getcwd();
+    // Đường dẫn và tên tệp JSON bạn muốn lưu (tại thư mục hiện tại)
+    $filePath = $currentDirectory . '/data.json';
 
-// Đường dẫn và tên tệp JSON bạn muốn lưu (tại thư mục hiện tại)
-$filePath = $currentDirectory . '/data.json';
-
-// Lưu chuỗi JSON vào tệp
-if (file_put_contents($filePath, $jsonData)) {
-    echo "Dữ liệu đã được lưu vào tệp JSON thành công.";
-} else {
-    echo "Lỗi khi lưu dữ liệu vào tệp JSON.";
+    // Lưu chuỗi JSON vào tệp
+    if (file_put_contents($filePath, $jsonData)) {
+        echo "Dữ liệu đã được lưu vào tệp JSON thành công.";
+    } else {
+        echo "Lỗi khi lưu dữ liệu vào tệp JSON.";
+    }
 }
 ?>

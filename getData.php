@@ -9,7 +9,7 @@
 
     }
     function getDataLogin($message){
-        $data=[];
+        $data['Login']=[];
         // Split the message into components using the "|" delimiter
         $components = explode('|', $message);
 
@@ -32,12 +32,12 @@
             // Check if the optional location code field is present
             $vendorProfile = isset($loginFullVP[1]) ? $loginFullVP[1] : '';
 
-            $data['UID Algorithm'] = $uidAlgorithm;
-            $data['PWD Algorithm'] = $pwdAlgorithm;
-            $data['Login User ID'] = $loginUserId;
-            $data['Login Password'] = $loginPassword;
-            $data['Location Code'] = $locationCode;
-            $data['Vendor Profile'] = $vendorProfile;
+            $data['Login']['UID Algorithm'] = $uidAlgorithm;
+            $data['Login']['PWD Algorithm'] = $pwdAlgorithm;
+            $data['Login']['Login User ID'] = $loginUserId;
+            $data['Login']['Login Password'] = $loginPassword;
+            $data['Login']['Location Code'] = $locationCode;
+            $data['Login']['Vendor Profile'] = $vendorProfile;
         } else {
             echo "Invalid message format\n";
         }

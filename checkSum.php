@@ -1,6 +1,5 @@
 <?php
-class CheckSum {
-    public static function applyChecksum($strMsg) {
+function applyChecksum($strMsg) {
         $intAscSum = 0;
 
         // Transfer SIP message to an array of characters.
@@ -43,11 +42,5 @@ class CheckSum {
         }
 
         return $strMsg . strtoupper(dechex(bindec($strNewBinVal)));
-    }
 }
-
-// Example usage:
-$strMsg = "9300CNadd|CO1234|CP2122|VP3M|AY2AZ";
-$checksum = CheckSum::applyChecksum($strMsg);
-echo $checksum;
 ?>

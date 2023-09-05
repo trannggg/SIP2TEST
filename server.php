@@ -1,5 +1,7 @@
 <?php
 require_once 'getData.php';
+require_once 'saveToJson.php';
+require_once 'checkSum.php';
 // Thiết lập giới hạn thời gian và thời gian chờ vô hạn
 set_time_limit(0);
 ini_set('default_socket_timeout', -1);
@@ -22,18 +24,28 @@ while (true) {
         echo "No data received\n";
     } else {
         echo "Received data: $data\n";
-
         // Tách dữ liệu và checksum từ chuỗi
-        list($data, $checksum) = explode("AY", $data);
-        // Xử lý dữ liệu
-        $data1=getData($data);
-        print_r($data1);
-        // Phản hồi tới client
-        $response = "Server received: $data";
-        socket_write($client_socket, $data, strlen($response));
+        $msgToChecksumFull=explode('AZ',$data);
+        $msgToChecksum=$msgToChecksumFull[0]."AZ";
+        // Tính checksum
+        $checksum=applyChecksum($msgToChecksum);
+        if (strcmp($checksum,$data)){
+            $loginUserId = isset($loginFullUserID[1]) ? $loginFullUserID[1] : '';
+            // Xử lý dữ liệu
+            $data1=getData($data);
+            print_r($data1);
+            saveToJson($data1);
+            // Phản hồi tới client
+            list($data, $checksum1) = explode("AY", $data);
+            $response = "Server received: $data";
+            socket_write($client_socket, $data, strlen($response));
 
-        // In dữ liệu nhận được
-        echo "Response sent to client: $response\n";
+            // In dữ liệu nhận được
+            echo "Response sent to client: $response\n";
+        }else{
+            echo "Error Checksum ";
+        }
+
     }
 }
 
