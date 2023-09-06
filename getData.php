@@ -318,7 +318,11 @@
             $data['Update Notice']['Patron Identifier'] = $updateNoticePatronIdentifier;
             $data['Update Notice']['Item Identifier'] = $updateNoticeItemIdentifier;
             $data['Update Notice']['Terminal Password'] = $updateNoticeTerminalPassword;
-            
+            if(count($components) >5){
+                $updateNoticeFullComment=explode('DE', $components[4]);
+            $updateNoticeComment = isset($updateNoticeFullComment[1]) ? $updateNoticeFullComment[1] : '';
+            $data['Update Notice']['Comment'] = $updateNoticeComment;
+            }
         }else {
             echo "Invalid message format\n";
         }
