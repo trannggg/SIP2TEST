@@ -9,6 +9,7 @@ require 'data/renewItem.php';
 require 'data/updateNotice.php';
 require 'data/feePaid.php';
 require 'data/patronStatus.php';
+require 'data/patronInformation.php';
 
 function getData($message){
     $components = explode('|', $message);
@@ -24,6 +25,7 @@ function getData($message){
         case '43': return getDataUpdateNotice($message);
         case '23': return getDataPatronStatus($message);
         case '37': return getDataFeePaid($message);
+        case '63':  return getDataPatronInformation($message);
     }
 }
 ?>
