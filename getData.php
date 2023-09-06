@@ -20,7 +20,7 @@
             // Extract UID algorithm and PWD algorithm
             $uidAlgorithm = substr($components[0], 2, 1);
             $pwdAlgorithm = substr($components[0], 3, 1);
-            // Extract Login user id
+            // Extract Login us er id
             $loginFullUserID=explode('CN', $components[0]);
             $loginUserId = isset($loginFullUserID[1]) ? $loginFullUserID[1] : '';
             // Extract Login password
