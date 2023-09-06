@@ -1,10 +1,10 @@
 {
     "Login": {
-        "UID Algorithm": "93",
-        "PWD Algorithm": "00",
+        "UID Algorithm": "0",
+        "PWD Algorithm": "0",
         "Login User ID": "add",
-        "Login Password": "1234",
-        "Location Code": "2122",
+        "Login Password": "12345",
+        "Location Code": "12344",
         "Vendor Profile": "3M"
     }
 }

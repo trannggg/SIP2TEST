@@ -15,8 +15,8 @@
 
         if (count($components) >= 2) {
             // Extract UID algorithm and PWD algorithm
-            $uidAlgorithm = substr($components[0], 0, 2);
-            $pwdAlgorithm = substr($components[0], 2, 2);
+            $uidAlgorithm = substr($components[0], 2, 1);
+            $pwdAlgorithm = substr($components[0], 3, 1);
             // Extract Login user id
             $loginFullUserID=explode('CN', $components[0]);
             $loginUserId = isset($loginFullUserID[1]) ? $loginFullUserID[1] : '';
