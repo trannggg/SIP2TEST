@@ -8,6 +8,9 @@
             case '65': return getDataRenewAllItems($message);
             case '35': return getDataEndSession($message);
             case '11': return getDataItemCheckout($message);
+            case '29': return getDataRenew($message);
+            case '17': return getDataInformation($message);
+            case '43': return getDataUpdateNotice($message);
         }
 
     }
@@ -204,5 +207,121 @@
         } else {
             echo "Invalid message format\n";
         }
+    }
+
+    function getDataRenew($message){
+        $data['Renew'] = [];
+        // Split the message into components using the "|" delimiter
+        $components = explode('|', $message);
+
+        if(count($components) >=2){
+            // Extract third party allowed and no block?
+            $thirdPartyAllowed = substr($components[0], 2, 1);
+            $noBlock = substr($components[0], 3, 1);
+            // Extract transaction date and nb due date
+            $transactionDate = substr($components[0],4,18);
+            $nbDueDate = substr($components[0],22,18);
+            // Extract institution id
+            $renewFullInstitutionId=explode('AO', $components[0]);
+            $renewInstitutionId = isset($renewFullInstitutionId[1]) ? $renewFullInstitutionId[1] : '';
+            // Extract patron identifier
+            $renewFullPatronIdentifier=explode('AA', $components[1]);
+            $renewPatronIdentifier = isset($renewFullPatronIdentifier[1]) ? $renewFullPatronIdentifier[1] : '';
+            // Extract patron password
+            // Extract item identifier
+            // Extract title identifier 
+            // Extract terminal password 
+            // Extract item properties 
+            // Extract fee acknowledged
+
+            $data['Renew']['Third Party Allowed'] = $thirdPartyAllowed;
+            $data['Renew']['No Block'] = $noBlock;
+            $data['Renew']['Transaction Date'] = $transactionDate;
+            $data['Renew']['nb Due Date'] = $nbDueDate;
+            $data['Renew']['Institution ID'] = $renewInstitutionId;
+            $data['Renew']['Patron Identifier'] = $renewPatronIdentifier;
+            
+        }else {
+            echo "Invalid message format\n";
+        }
+        return $data;
+    }
+
+    
+    function getDataInformation($message){
+        $data['ItemInformation'] = [];
+        // Split the message into components using the "|" delimiter
+        $components = explode('|', $message);
+
+        if(count($components) >=2){
+            
+            // Extract transaction date 
+            $transactionDate = substr($components[0],2,18);
+            // Extract institution id
+            $itemInforFullInstitutionId=explode('AO', $components[0]);
+            $itemInforInstitutionId = isset($itemInforFullInstitutionId[1]) ? $itemInforFullInstitutionId[1] : '';
+            // Extract item identifier
+            $itemInforFullItemIdentifier=explode('AB', $components[1]);
+            $itemInforItemIdentifier = isset($itemInforFullItemIdentifier[1]) ? $itemInforFullItemIdentifier[1] : '';
+            // Extract terminal password
+            $itemInforFullTerminalPassword=explode('AC', $components[1]);
+            $itemInforTerminalPassword = isset($itemInforFullTerminalPassword[1]) ? $itemInforFullTerminalPassword[1] : '';
+            
+            $data['ItemInformation']['Transaction Date'] = $transactionDate;
+            $data['ItemInformation']['Institution ID'] = $itemInforInstitutionId;
+            $data['ItemInformation']['Item Identifier'] = $itemInforItemIdentifier;
+            $data['ItemInformation']['Terminal Password'] = $itemInforTerminalPassword;
+            
+        }else {
+            echo "Invalid message format\n";
+        }
+        return $data;
+    }
+
+    function getDataUpdateNotice($message){
+        $data['UpdateNotice'] = [];
+        // Split the message into components using the "|" delimiter
+        $components = explode('|', $message);
+
+        if(count($components) >=2){
+            // Extract Notice Status
+            $noticeStatus = substr($components[0],2,2);
+           
+            // Extract transaction date and  due date
+            $transactionDate = substr($components[0],4,18);
+            $deliveryDate = substr($components[0],22,18);
+
+            // Extract Notice Medium and Notification Type
+            $noticeMedium = substr($components[0],42,1);
+            $notificationType = substr($components[0],45,1);
+            // Extract institution id
+            $updateNoticeFullInstitutionId=explode('AO', $components[0]);
+            $updateNoticeInstitutionId = isset($updateNoticeFullInstitutionId[1]) ? $updateNoticeFullInstitutionId[1] : '';
+            // Extract patron identifier
+            $updateNoticeFullPatronIdentifier=explode('AA', $components[1]);
+            $updateNoticePatronIdentifier = isset($updateNoticeFullPatronIdentifier[1]) ? $updateNoticeFullPatronIdentifier[1] : '';
+            
+            // Extract item identifier
+            $updateNoticeFullItemIdentifier=explode('AB', $components[2]);
+            $updateNoticeItemIdentifier = isset($updateNoticeFullItemIdentifier[1]) ? $updateNoticeFullItemIdentifier[1] : ''; 
+            
+            // Extract terminal password 
+            $updateNoticeFullTerminalPassword=explode('AC', $components[3]);
+            $updateNoticeTerminalPassword = isset($updateNoticeFullTerminalPassword[1]) ? $updateNoticeFullTerminalPassword[1] : '';
+            
+            $data['Update Notice']['Notice Status'] = $noticeStatus;
+            $data['Update Notice']['Transaction Date'] = $transactionDate;
+            $data['Update Notice']['Delicary Date'] = $deliveryDate;
+            $data['Update Notice']['Notice Medium'] = $noticeMedium;
+            $data['Update Notice']['Notification Type'] = $notificationType;
+            $data['Update Notice']['Institution ID'] = $updateNoticeInstitutionId;
+            $data['Update Notice']['Patron Identifier'] = $updateNoticePatronIdentifier;
+            $data['Update Notice']['Item Identifier'] = $updateNoticeItemIdentifier;
+            $data['Update Notice']['Terminal Password'] = $updateNoticeTerminalPassword;
+            
+        }else {
+            echo "Invalid message format\n";
+        }
+        return $data;
     }
 ?>
