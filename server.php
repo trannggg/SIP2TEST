@@ -50,6 +50,6 @@ while (true) {
 }
 
 // Đóng kết nối socket con khi kết thúc
-socket_close($client_socket);
+// socket_close($client_socket);
 
 ?>

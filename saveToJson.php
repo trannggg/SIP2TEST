@@ -11,9 +11,9 @@ function saveToJson($data){
 
     // Lưu chuỗi JSON vào tệp
     if (file_put_contents($filePath, $jsonData)) {
-        echo "Dữ liệu đã được lưu vào tệp JSON thành công.";
+        echo "Dữ liệu đã được lưu vào tệp JSON thành công.\n";
     } else {
-        echo "Lỗi khi lưu dữ liệu vào tệp JSON.";
+        echo "Lỗi khi lưu dữ liệu vào tệp JSON.\n";
     }
 }
 ?>
