@@ -19,10 +19,15 @@ function getDataRenew($message){
         $renewPatronIdentifier = isset($renewFullPatronIdentifier[1]) ? $renewFullPatronIdentifier[1] : '';
         // Extract patron password
         // Extract item identifier
-        // Extract title identifier 
-        // Extract terminal password 
-        // Extract item properties 
-        // Extract fee acknowledged
+        $i = 2;
+        while ($i < count($components)) {
+            if (substr($components[$i], 0, 2) === 'AD') {
+                $renewPatronPassword = '' . substr($components[$i], 2);
+            } elseif (substr($components[$i], 0, 2) === 'AB') {
+                $renewItemIdentifier = '' . substr($components[$i], 2);
+            }
+            $i++;
+        }
 
         $data['Renew']['Third Party Allowed'] = $thirdPartyAllowed;
         $data['Renew']['No Block'] = $noBlock;
@@ -30,6 +35,8 @@ function getDataRenew($message){
         $data['Renew']['nb Due Date'] = $nbDueDate;
         $data['Renew']['Institution ID'] = $renewInstitutionId;
         $data['Renew']['Patron Identifier'] = $renewPatronIdentifier;
+        $data['Renew']['Patron Password'] = $renewPatronPassword;
+        $data['Renew']['Item Identifier'] = $renewItemIdentifier;
         
     }else {
         echo "Invalid message format\n";
