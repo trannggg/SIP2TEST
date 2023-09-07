@@ -1,1 +1,12 @@
-null
+{
+    "Renew": {
+        "Third Party Allowed": "Y",
+        "No Block": "N",
+        "Transaction Date": "20230907    161628",
+        "nb Due Date": "20230921    161628",
+        "Institution ID": "",
+        "Patron Identifier": "",
+        "Patron Password": null,
+        "Item Identifier": null
+    }
+}
