@@ -1,48 +1,52 @@
 <?php
+require_once 'messages/updateNotice.php';
 function getDataUpdateNotice($message){
-    $data['UpdateNotice'] = [];
+    $data['Update Notice'] = [];
     // Split the message into components using the "|" delimiter
     $components = explode('|', $message);
 
     if(count($components) >=2){
+        // Create an instance of the updateNotice class
+        $updateNotice = new updateNotice();
         // Extract Notice Status
-        $noticeStatus = substr($components[0],2,2);
+        $updateNotice->setNoticeStatus(substr($components[0], 2, 2));
        
         // Extract transaction date and  due date
-        $transactionDate = substr($components[0],4,18);
-        $deliveryDate = substr($components[0],22,18);
+        $updateNotice->setTransactionDate(substr($components[0],4,18));
+        $updateNotice->setDeliveryDate(substr($components[0], 22, 18));
 
         // Extract Notice Medium and Notification Type
-        $noticeMedium = substr($components[0],42,1);
-        $notificationType = substr($components[0],45,1);
+        $updateNotice->setNoticeMedium(substr($components[0], 42, 1));
+        $updateNotice->setNotificationType(substr($components[0], 45, 1));
+
         // Extract institution id
         $updateNoticeFullInstitutionId=explode('AO', $components[0]);
-        $updateNoticeInstitutionId = isset($updateNoticeFullInstitutionId[1]) ? $updateNoticeFullInstitutionId[1] : '';
+        $updateNotice->setNoticeInstitutionId(isset($updateNoticeFullInstitutionId[1]) ? $updateNoticeFullInstitutionId[1] : '');
         // Extract patron identifier
         $updateNoticeFullPatronIdentifier=explode('AA', $components[1]);
-        $updateNoticePatronIdentifier = isset($updateNoticeFullPatronIdentifier[1]) ? $updateNoticeFullPatronIdentifier[1] : '';
-        
+        $updateNotice->setNoticePatronIdentifier(isset($updateNoticeFullPatronIdentifier[1]) ? $updateNoticeFullPatronIdentifier[1] : '');
         // Extract item identifier
         $updateNoticeFullItemIdentifier=explode('AB', $components[2]);
-        $updateNoticeItemIdentifier = isset($updateNoticeFullItemIdentifier[1]) ? $updateNoticeFullItemIdentifier[1] : ''; 
-        
+        $updateNotice->setNoticeItemIdentifier(isset($updateNoticeFullItemIdentifier[1]) ? $updateNoticeFullItemIdentifier[1] : '');
         // Extract terminal password 
         $updateNoticeFullTerminalPassword=explode('AC', $components[3]);
-        $updateNoticeTerminalPassword = isset($updateNoticeFullTerminalPassword[1]) ? $updateNoticeFullTerminalPassword[1] : '';
-        
-        $data['Update Notice']['Notice Status'] = $noticeStatus;
-        $data['Update Notice']['Transaction Date'] = $transactionDate;
-        $data['Update Notice']['Delicary Date'] = $deliveryDate;
-        $data['Update Notice']['Notice Medium'] = $noticeMedium;
-        $data['Update Notice']['Notification Type'] = $notificationType;
-        $data['Update Notice']['Institution ID'] = $updateNoticeInstitutionId;
-        $data['Update Notice']['Patron Identifier'] = $updateNoticePatronIdentifier;
-        $data['Update Notice']['Item Identifier'] = $updateNoticeItemIdentifier;
-        $data['Update Notice']['Terminal Password'] = $updateNoticeTerminalPassword;
+        $updateNotice->setNoticeTerminalPassword(isset($updateNoticeFullTerminalPassword[1]) ? $updateNoticeFullTerminalPassword[1] : '');
+
+        // Retrieve the data from the updateNotice object
+        $data['Update Notice']['Notice Status'] = $updateNotice->getNoticeStatus();
+        $data['Update Notice']['Transaction Date'] = $updateNotice->getTransactionDate();
+        $data['Update Notice']['Delivery Date'] = $updateNotice->getDeliveryDate();
+        $data['Update Notice']['Notice Medium'] = $updateNotice->getNoticeMedium();
+        $data['Update Notice']['Notification Type'] = $updateNotice->getNotificationType();
+        $data['Update Notice']['Institution ID'] = $updateNotice->getNoticeInstitutionId();
+        $data['Update Notice']['Patron Identifier'] = $updateNotice->getNoticePatronIdentifier();
+        $data['Update Notice']['Item Identifier'] = $updateNotice->getNoticeItemIdentifier();
+        $data['Update Notice']['Terminal Password'] = $updateNotice->getNoticeTerminalPassword();
+
         if(count($components) >5){
             $updateNoticeFullComment=explode('DE', $components[4]);
-        $updateNoticeComment = isset($updateNoticeFullComment[1]) ? $updateNoticeFullComment[1] : '';
-        $data['Update Notice']['Comment'] = $updateNoticeComment;
+            $updateNotice->setNoticeComment(isset($updateNoticeFullComment[1]) ? $updateNoticeFullComment[1] : '');
+            $data['Update Notice']['Comment'] = $updateNotice->getNoticeComment();
         }
     }else {
         echo "Invalid message format\n";

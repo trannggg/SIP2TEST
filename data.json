@@ -1,12 +1,14 @@
 {
-    "Renew": {
-        "Third Party Allowed": "Y",
-        "No Block": "N",
-        "Transaction Date": "20230907    161628",
-        "nb Due Date": "20230921    161628",
-        "Institution ID": "",
-        "Patron Identifier": "",
-        "Patron Password": null,
-        "Item Identifier": null
+    "Update Notice": {
+        "Notice Status": "00",
+        "Transaction Date": "20230907    110512",
+        "Delivery Date": "20230907    105957",
+        "Notice Medium": "0",
+        "Notification Type": "0",
+        "Institution ID": "asa",
+        "Patron Identifier": "123123",
+        "Item Identifier": "2312312",
+        "Terminal Password": "",
+        "Comment": "dsa"
     }
 }
