@@ -1,15 +1,15 @@
 <?php
-require 'data/login.php';
-require 'data/endSession.php';
-require 'data/itemCheckin.php';
-require 'data/itemCheckout.php';
-require 'data/itemInformation.php';
-require 'data/renewAllItems.php';
-require 'data/renewItem.php';
-require 'data/updateNotice.php';
-require 'data/feePaid.php';
-require 'data/patronStatus.php';
-require 'data/patronInformation.php';
+require_once 'data/login.php';
+require_once 'data/endSession.php';
+require_once 'data/itemCheckin.php';
+require_once 'data/itemCheckout.php';
+require_once 'data/itemInformation.php';
+require_once 'data/renewAllItems.php';
+require_once 'data/renewItem.php';
+require_once 'data/updateNotice.php';
+require_once 'data/feePaid.php';
+require_once 'data/patronStatus.php';
+require_once 'data/patronInformation.php';
 
 function getData($message){
     $components = explode('|', $message);
