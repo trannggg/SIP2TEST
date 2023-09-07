@@ -1,9 +1,6 @@
 test.php
 saveToJson.php
 data/driveMapping.php
-<<<<<<< HEAD
 server-test.php
 getData-test.php
-=======
-server-test.php
->>>>>>> d083adc (save)
+
