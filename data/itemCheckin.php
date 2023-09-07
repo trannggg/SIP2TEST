@@ -1,43 +1,38 @@
 <?php
+require_once 'messages/itemCheckin.php';
 function getDataItemCheckin($message){
     $data['Item Checkin']=[];
     $components = explode('|', $message);
 
     if (count($components) >= 2) {
-        $noBlock = substr($components[0], 2, 1);
-
-        // Extract transaction date and time
-        $transactionDate = substr($components[0], 3, 18);
-
-        // Extract return date and time
-        $returnDate = substr($components[0], 21, 18);
-
-        // Extract current location
+        $checkIn = new ItemCheckin(); // Tạo một đối tượng CheckIn
+        $checkIn->setNoBlock(substr($components[0], 2, 1));
+        $checkIn->setTransactionDate(substr($components[0], 3, 18));
+        $checkIn->setReturnDate(substr($components[0], 21, 18));
+        
         $fullCurrentLocation = explode('AP', $components[0]);
-        $currentLocation = isset($fullCurrentLocation[1]) ? $fullCurrentLocation[1] : '';
-
-        // Extract institution ID
+        $checkIn->setCurrentLocation(isset($fullCurrentLocation[1]) ? $fullCurrentLocation[1] : '');
+        
         $fullInstitutionId = explode('AO', $components[1]);
-        $institutionId = isset($fullInstitutionId[1]) ? $fullInstitutionId[1] : '';
-
-        // Extract item identifier (barcode)
+        $checkIn->setInstitutionId(isset($fullInstitutionId[1]) ? $fullInstitutionId[1] : '');
+        
         $fullItemIdentifier = explode('AB', $components[2]);
-        $itemIdentifier = isset($fullItemIdentifier[1]) ? $fullItemIdentifier[1] : '';
-
-        // Extract terminal password
+        $checkIn->setItemIdentifier(isset($fullItemIdentifier[1]) ? $fullItemIdentifier[1] : '');
+        
         $fullTerminalPassword = explode('AC', $components[3]);
-        $terminalPassword = isset($fullTerminalPassword[1]) ? $fullTerminalPassword[1] : '';
+        $checkIn->setTerminalPassword(isset($fullTerminalPassword[1]) ? $fullTerminalPassword[1] : '');
 
-        $data['Item Checkin']['No Block'] = $noBlock;
-        $data['Item Checkin']['Transaction Date'] = $transactionDate;
-        $data['Item Checkin']['Return Date'] = $returnDate;
-        $data['Item Checkin']['Current Location'] = $currentLocation;
-        $data['Item Checkin']['Institution ID'] = $institutionId;
-        $data['Item Checkin']['Item Identifier (Barcode)'] = $itemIdentifier;
-        $data['Item Checkin']['Terminal Password'] = $terminalPassword;
-
+        // Lấy các giá trị từ đối tượng CheckIn và đưa vào mảng dữ liệu
+        $data['Item Checkin']['No Block'] = $checkIn->isNoBlock();
+        $data['Item Checkin']['Transaction Date'] = $checkIn->getTransactionDate();
+        $data['Item Checkin']['Return Date'] = $checkIn->getReturnDate();
+        $data['Item Checkin']['Current Location'] = $checkIn->getCurrentLocation();
+        $data['Item Checkin']['Institution ID'] = $checkIn->getInstitutionId();
+        $data['Item Checkin']['Item Identifier (Barcode)'] = $checkIn->getItemIdentifier();
+        $data['Item Checkin']['Terminal Password'] = $checkIn->getTerminalPassword();
     } else {
         echo "Invalid message format\n";
     }
+
     return $data;
 }
