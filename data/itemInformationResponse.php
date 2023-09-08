@@ -1,108 +1,116 @@
 <?php
+require_once 'messages/itemInformationResponse.php';
+
 function getDataInformationResponse($message){
     $data['Item Information Response']=[];
     $components = explode('|', $message);
 
     if (count($components) >= 2) {
+        $itemInformationResponse = new ItemInformationResponse(); // Tạo một đối tượng ItemInformationResponse
+        
         // Extract circulation status
-        $circulationStatus = substr($components[0], 2, 2);
-        // Extract security marker
-        $securityMaker = substr($components[0], 4, 2);
-         // Extract fee type
-         $feeType = substr($components[0], 6, 2);
-        // Extract transaction date and time
-        $transactionDate = substr($components[0], 8, 18);
+        $itemInformationResponse->setCirculationStatus(substr($components[0], 2, 2)) ;
 
+        // Extract security marker
+        $itemInformationResponse->setSecurityMarker(substr($components[0], 4, 2)) ;
+
+         // Extract fee type
+         $itemInformationResponse->setFeeType( substr($components[0], 6, 2));
+
+        // Extract transaction date and time
+        $itemInformationResponse->setTransactionDate(substr($components[0], 8, 18)) ;
+
+        // Extract item identifier (barcode)
         if(substr($components[0], 26, 2) === 'AB'){
             $fullItemIdentifier = explode('AB', $components[0]);
-            $itemIdentifier = isset($fullItemIdentifier[1]) ? $fullItemIdentifier[1] : '';
+            $itemInformationResponse->setItemIdentifier(isset($fullItemIdentifier[1]) ? $fullItemIdentifier[1] : '') ;
         }
 
         $i = 0;
                 while ($i < count($components)) {
                     // Extract hold queue length
                     if (substr($components[$i], 0, 2) === 'CF') {
-                        $holdQueueLength = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setHoldQueueLength('' . substr($components[$i], 2));
                     }
                     // Extract due date
                     elseif (substr($components[$i], 0, 2) === 'AH') {
-                        $dueDate = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setDueDate('' . substr($components[$i], 2)) ;
                     }
                     // Extract recall date 
                     elseif (substr($components[$i], 0, 2) === 'CJ') {
-                        $recallDate = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setRecallDate('' . substr($components[$i], 2));
                     }
                     // Extract hold pickup date
                     elseif (substr($components[$i], 0, 2) === 'CM') {
-                        $holdPickupDate = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setHoldPickupDate('' . substr($components[$i], 2));
                     } 
                     // Extract item identifier
                     elseif (substr($components[$i], 0, 2) === 'AB') {
-                        $itemIdentifier = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setItemIdentifier('' . substr($components[$i], 2)) ;
                     }
                     // Extract title identifier
                     elseif (substr($components[$i], 0, 2) === 'AJ') {
-                        $titleIdentifier = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setTitleIdentifier('' . substr($components[$i], 2));
                     }
                     // Extract owner
                     elseif (substr($components[$i], 0, 2) === 'BG') {
-                        $owner = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setOwner('' . substr($components[$i], 2));
                     }
                     // Extract currency type
                     elseif (substr($components[$i], 0, 2) === 'BH') {
-                        $currencyType = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setCurrencyType('' . substr($components[$i], 2));
                     }
                     // Extract fee amount 
                     elseif (substr($components[$i], 0, 2) === 'BV') {
-                        $feeAmount = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setFeeAmount('' . substr($components[$i], 2));
                     }
                     // Extract media Type
                     elseif (substr($components[$i], 0, 2) === 'CK') {
-                        $mediaType = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setMediaType('' . substr($components[$i], 2));
                     }
                     // Extract permanent location 
                     elseif (substr($components[$i], 0, 2) === 'AQ') {
-                        $permanentLocation = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setPermanentLocation('' . substr($components[$i], 2));
                     }
                     // Extract current location
                     elseif (substr($components[$i], 0, 2) === 'AP') {
-                        $currentLocation = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setCurrentLocation('' . substr($components[$i], 2));
                     }
                     // Extract item properties
                     elseif (substr($components[$i], 0, 2) === 'CH') {
-                        $itemProperties = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setItemProperties('' . substr($components[$i], 2));
                     }
                     // Extract screen message
                     elseif (substr($components[$i], 0, 2) === 'AF') {
-                        $screenMessage = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setScreenMessage('' . substr($components[$i], 2));
                     }
                     // Extract print line  
                     elseif (substr($components[$i], 0, 2) === 'AG') {
-                        $printLine  = '' . substr($components[$i], 2);
+                        $itemInformationResponse->setPrintLine('' . substr($components[$i], 2));
                     }
                     echo $i;
                     $i++;
                 }
 
-        $data['Item Information Response']['Circulation Status'] = $circulationStatus;        
-        $data['Item Information Response']['Security Marker '] = $securityMaker;
-        $data['Item Information Response']['Fee Type'] = $feeType;
-        $data['Item Information Response']['Transaction date'] = $transactionDate;
-        $data['Item Information Response']['Hold Queue Length'] = $holdQueueLength;
-        $data['Item Information Response']['Due Date'] = $dueDate;
-        $data['Item Information Response']['Recall Date'] = $recallDate;
-        $data['Item Information Response']['Hold Pickup Date'] = $holdPickupDate;
-        $data['Item Information Response']['Item Identifier (Barcode)'] = $itemIdentifier;
-        $data['Item Information Response']['Title Identifier'] = $titleIdentifier;
-        $data['Item Information Response']['Owner'] = $owner;
-        $data['Item Information Response']['Currency Type'] = $currencyType;
-        $data['Item Information Response']['Fee Amount'] = $feeAmount;
-        $data['Item Information Response']['Media Type'] = $mediaType;
-        $data['Item Information Response']['Permanent Location'] = $permanentLocation;
-        $data['Item Information Response']['Current Location'] = $currentLocation;
-        $data['Item Information Response']['Item Properties '] = $itemProperties;
-        $data['Item Information Response']['Sceen Message'] = $screenMessage;
-        $data['Item Information Response']['Print Line'] = $printLine;
+        $data['Item Information Response']['Circulation Status'] = $itemInformationResponse->getCirculationStatus();        
+        $data['Item Information Response']['Security Marker '] = $itemInformationResponse->getSecurityMarker();
+        $data['Item Information Response']['Fee Type'] = $itemInformationResponse->getFeeType();
+        $data['Item Information Response']['Transaction date'] = $itemInformationResponse->getTransactionDate();
+        $data['Item Information Response']['Hold Queue Length'] = $itemInformationResponse->getHoldQueueLength();
+        $data['Item Information Response']['Due Date'] = $itemInformationResponse->getDueDate();
+        $data['Item Information Response']['Recall Date'] = $itemInformationResponse->getRecallDate();
+        $data['Item Information Response']['Hold Pickup Date'] = $itemInformationResponse->getHoldPickupDate();
+        $data['Item Information Response']['Item Identifier (Barcode)'] = $itemInformationResponse->getItemIdentifier();
+        $data['Item Information Response']['Title Identifier'] = $itemInformationResponse->getTitleIdentifier();
+        $data['Item Information Response']['Owner'] = $itemInformationResponse->getOwner();
+        $data['Item Information Response']['Currency Type'] = $itemInformationResponse->getCurrencyType();
+        $data['Item Information Response']['Fee Amount'] = $itemInformationResponse->getFeeAmount();
+        $data['Item Information Response']['Media Type'] = $itemInformationResponse->getMediaType();
+        $data['Item Information Response']['Permanent Location'] = $itemInformationResponse->getPermanentLocation();
+        $data['Item Information Response']['Current Location'] = $itemInformationResponse->getCurrentLocation();
+        $data['Item Information Response']['Item Properties '] = $itemInformationResponse->getItemProperties();
+        $data['Item Information Response']['Sceen Message'] = $itemInformationResponse->getScreenMessage();
+        $data['Item Information Response']['Print Line'] = $itemInformationResponse->getPrintLine();
     
 
     } else {
@@ -110,4 +118,8 @@ function getDataInformationResponse($message){
     }
     return $data;
 }
+
+// $message = "1801000120230908    101206AB|AJ|CF00000|AY6AZF5CD";
+// $result = getDataInformationResponse($message);
+// print_r($result);
 ?>
