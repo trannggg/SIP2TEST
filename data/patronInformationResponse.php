@@ -1,154 +1,152 @@
 <?php
+require_once 'messages/patronInformationResponse.php';
 function getDataPatronInformationResponse($message){
     
     $data['Patron Information Response']=[];
     $components = explode('|', $message);
 
     if (count($components) >= 2) {
+        $response = new PatronInformationResponse();
         // Extract patron Status
-        $patronStatus = substr($components[0], 2, 14);
+        $response->setPatronStatus(substr($components[0], 2, 14));
         // Extract language
-        $language = substr($components[0], 16, 3);
+        $response->setLanguage(substr($components[0], 16, 3));
         // Extract transaction date and time
-        $transactionDate = substr($components[0], 19, 18);
+        $response->setTransactionDate(substr($components[0], 19, 18));
         // Extract hold items count
-        $holdItemsCount = substr($components[0], 37, 4);
+        $response->setHoldItemsCount(substr($components[0], 37, 4));
         // Extract overdue items count 
-        $overdueItemsCount  = substr($components[0], 41, 4);
+        $response->setOverdueItemsCount(substr($components[0], 41, 4));
         // Extract charged items count
-        $chargedItemsCount = substr($components[0], 45, 4);
+        $response->setChargedItemsCount(substr($components[0], 45, 4));
         // Extract fine items count
-        $fineItemsCount = substr($components[0], 49, 4);
+        $response->setFineItemsCount(substr($components[0], 49, 4));
         // Extract recall items count
-        $recallitemsCount = substr($components[0], 53, 4);
+        $response->setRecallItemsCount(substr($components[0], 53, 4));
         // Extract unavailable holds count
-        $unavailableHoldsCount = substr($components[0], 57, 4);
-
+        $response->setUnavailableHoldsCount(substr($components[0], 57, 4));
         // Extract institution ID
         $fullInstitutionId = explode('AO', $components[0]);
-        $institutionId = isset($fullInstitutionId[1]) ? $fullInstitutionId[1] : '';
-
+        $response->setInstitutionId(isset($fullInstitutionId[1]) ? $fullInstitutionId[1] : '');
         // Extract patron identifier
         $fullPatronIdentifier = explode('AA', $components[1]);
-        $patronIdentifier = isset($fullPatronIdentifier[1]) ? $fullPatronIdentifier[1] : '';
-
+        $response->setPatronIdentifier(isset($fullPatronIdentifier[1]) ? $fullPatronIdentifier[1] : '');
         // Extract personal name
         $fullpersonalName = explode('AE', $components[2]);
-        $personalName = isset($fullpersonalName[1]) ? $fullpersonalName[1] : '';
+        $response->setPersonalName(isset($fullpersonalName[1]) ? $fullpersonalName[1] : '');
 
         $i = 3;
-                while ($i < count($components)) {
-                    // Extract hold items limit
-                    if (substr($components[$i], 0, 2) === 'BZ') {
-                        $holdItemsLimit = '' . substr($components[$i], 2);
-                    }
-                    // Extract overdue items limit
-                    if (substr($components[$i], 0, 2) === 'CA') {
-                        $overdueItemsLimit = '' . substr($components[$i], 2);
-                    }
-                    // Extract charged items limit
-                    if (substr($components[$i], 0, 2) === 'CB') {
-                        $chargedItemsLimit = '' . substr($components[$i], 2);
-                    }
-                    // Extract valid patron
-                    if (substr($components[$i], 0, 2) === 'BL') {
-                        $validPatron = '' . substr($components[$i], 2);
-                    } 
-                    // Extract valid patron password
-                    elseif (substr($components[$i], 0, 2) === 'CQ') {
-                        $validPatronPassword = '' . substr($components[$i], 2);
-                    }
-                    // Extract currency type
-                    elseif (substr($components[$i], 0, 2) === 'BH') {
-                        $currencyType = '' . substr($components[$i], 2);
-                    }
-                    // Extract fee amount 
-                    elseif (substr($components[$i], 0, 2) === 'BV') {
-                        $feeAmount = '' . substr($components[$i], 2);
-                    }
-                    // Extract fee limit 
-                    elseif (substr($components[$i], 0, 2) === 'CC') {
-                        $feeLimit = '' . substr($components[$i], 2);
-                    }
-                    // Extract hold items 
-                    elseif (substr($components[$i], 0, 2) === 'AS') {
-                        $holdItems = '' . substr($components[$i], 2);
-                    }
-                    // Extract overdue items 
-                    elseif (substr($components[$i], 0, 2) === 'AT') {
-                        $overdueItems = '' . substr($components[$i], 2);
-                    }
-                    // Extract charged items 
-                    elseif (substr($components[$i], 0, 2) === 'AU') {
-                        $chargedItems = '' . substr($components[$i], 2);
-                    }
-                    // Extract fine items 
-                    elseif (substr($components[$i], 0, 2) === 'AV') {
-                        $fineItems = '' . substr($components[$i], 2);
-                    }
-                    // Extract recall items 
-                    elseif (substr($components[$i], 0, 2) === 'BU') {
-                        $recallitems = '' . substr($components[$i], 2);
-                    }
-                    // Extract unavailable hold items  
-                    elseif (substr($components[$i], 0, 2) === 'CD') {
-                        $unavailebleHoldItems = '' . substr($components[$i], 2);
-                    }
-                    // Extract home address 
-                    elseif (substr($components[$i], 0, 2) === 'BD') {
-                        $homeAddress = '' . substr($components[$i], 2);
-                    }
-                    // Extract e-mail address 
-                    elseif (substr($components[$i], 0, 2) === 'BE') {
-                        $emailAddress = '' . substr($components[$i], 2);
-                    }
-                    // Extract home phone number 
-                    elseif (substr($components[$i], 0, 2) === 'BF') {
-                        $homePhoneNumber = '' . substr($components[$i], 2);
-                    }
-                    // Extract screen message
-                    elseif (substr($components[$i], 0, 2) === 'AF') {
-                        $screenMessage = '' . substr($components[$i], 2);
-                    }
-                    // Extract print line  
-                    elseif (substr($components[$i], 0, 2) === 'AG') {
-                        $printLine  = '' . substr($components[$i], 2);
-                    }
-                    $i++;
-                }
+        while ($i < count($components)) {
+            // Extract hold items limit
+            if (substr($components[$i], 0, 2) === 'BZ') {
+                $response->setHoldItemsLimit(substr($components[$i], 2));
+            }
+            // Extract overdue items limit
+            if (substr($components[$i], 0, 2) === 'CA') {
+                $response->setOverdueItemsLimit( substr($components[$i], 2));
+            }
+            // Extract charged items limit
+            if (substr($components[$i], 0, 2) === 'CB') {
+                $response->setChargedItemsLimit(substr($components[$i], 2));
+            }
+            // Extract valid patron
+            if (substr($components[$i], 0, 2) === 'BL') {
+                $response->setValidPatron(substr($components[$i], 2));
+            } 
+            // Extract valid patron password
+            elseif (substr($components[$i], 0, 2) === 'CQ') {
+                $response->setValidPatronPassword(substr($components[$i], 2));
+            }
+            // Extract currency type
+            elseif (substr($components[$i], 0, 2) === 'BH') {
+                $response->setCurrencyType(substr($components[$i], 2));
+            }
+            // Extract fee amount 
+            elseif (substr($components[$i], 0, 2) === 'BV') {
+                $response->setFeeAmount(substr($components[$i], 2));
+            }
+            // Extract fee limit 
+            elseif (substr($components[$i], 0, 2) === 'CC') {
+                $response->setFeeLimit(substr($components[$i], 2));
+            }
+            // Extract hold items 
+            elseif (substr($components[$i], 0, 2) === 'AS') {
+                $response->setHoldItems(substr($components[$i], 2));
+            }
+            // Extract overdue items 
+            elseif (substr($components[$i], 0, 2) === 'AT') {
+                $response->setOverdueItems(substr($components[$i], 2));
+            }
+            // Extract charged items 
+            elseif (substr($components[$i], 0, 2) === 'AU') {
+                $response->setChargedItems(substr($components[$i], 2));
+            }
+            // Extract fine items 
+            elseif (substr($components[$i], 0, 2) === 'AV') {
+                $response->setFineItems(substr($components[$i], 2));
+            }
+            // Extract recall items 
+            elseif (substr($components[$i], 0, 2) === 'BU') {
+                $response->setRecallItems(substr($components[$i], 2));
+            }
+            // Extract unavailable hold items  
+            elseif (substr($components[$i], 0, 2) === 'CD') {
+                $response->setUnavailableHoldItems(substr($components[$i], 2));
+            }
+            // Extract home address 
+            elseif (substr($components[$i], 0, 2) === 'BD') {
+                $response->setHomeAddress(substr($components[$i], 2));
+            }
+            // Extract e-mail address 
+            elseif (substr($components[$i], 0, 2) === 'BE') {
+                $response->setEmailAddress(substr($components[$i], 2));
+            }
+            // Extract home phone number 
+            elseif (substr($components[$i], 0, 2) === 'BF') {
+                $response->setHomePhoneNumber(substr($components[$i], 2));
+            }
+            // Extract screen message
+            elseif (substr($components[$i], 0, 2) === 'AF') {
+                $response->setScreenMessage(substr($components[$i], 2));
+            }
+            // Extract print line  
+            elseif (substr($components[$i], 0, 2) === 'AG') {
+                $response->setPrintLine(substr($components[$i], 2));
+            }
+            $i++;
+        }
 
-        $data['Patron Information Response']['Patron Status'] = $patronStatus;        
-        $data['Patron Information Response']['Language'] = $language;
-        $data['Patron Information Response']['Transaction date'] = $transactionDate;
-        $data['Patron Information Response']['Hold Items Count'] = $holdItemsCount;
-        $data['Patron Information Response']['Overdue Items Count '] = $overdueItemsCount;
-        $data['Patron Information Response']['Charged Items Count'] = $chargedItemsCount;
-        $data['Patron Information Response']['Fine Items Count'] = $fineItemsCount;
-        $data['Patron Information Response']['Recall Items Count '] = $recallitemsCount;
-        $data['Patron Information Response']['Unavailable Holds Count '] = $unavailableHoldsCount;
-        $data['Patron Information Response']['Institution id'] = $institutionId;
-        $data['Patron Information Response']['Patron identifier'] = $patronIdentifier;
-        $data['Patron Information Response']['Personal Name'] = $personalName;
-        $data['Patron Information Response']['Hold Items Limit'] = $holdItemsLimit;
-        $data['Patron Information Response']['Overdue Items Limit '] = $overdueItemsLimit;
-        $data['Patron Information Response']['Charged Items Limit'] = $chargedItemsLimit;
-        $data['Patron Information Response']['Valid Patron'] = $validPatron;
-        $data['Patron Information Response']['Valid Patron Password'] = $validPatronPassword;
-        $data['Patron Information Response']['Currency Type'] = $currencyType;
-        $data['Patron Information Response']['Fee Amount'] = $feeAmount;
-        $data['Patron Information Response']['Fee Limit'] = $feeLimit;
-        $data['Patron Information Response']['Hold Items '] = $holdItems;
-        $data['Patron Information Response']['Overdue Items  '] = $overdueItems;
-        $data['Patron Information Response']['Charged Items '] = $chargedItems;
-        $data['Patron Information Response']['Fine Items '] = $fineItems;
-        $data['Patron Information Response']['Recall Items  '] = $recallitems;
-        $data['Patron Information Response']['Unavailable Holds Items '] = $unavailebleHoldItems;
-        $data['Patron Information Response']['home address'] = $homeAddress;
-        $data['Patron Information Response']['e-mail address'] = $emailAddress;
-        $data['Patron Information Response']['home phone number'] = $homePhoneNumber;
-        $data['Patron Information Response']['Sceen Message'] = $screenMessage;
-        $data['Patron Information Response']['Print Line'] = $printLine;
-    
+        $data['Patron Information Response']['Patron Status'] = $response->getPatronStatus();        
+        $data['Patron Information Response']['Language'] = $response->getLanguage();
+        $data['Patron Information Response']['Transaction date'] = $response->getTransactionDate();
+        $data['Patron Information Response']['Hold Items Count'] = $response->getHoldItemsCount();
+        $data['Patron Information Response']['Overdue Items Count '] = $response->getOverdueItemsCount();
+        $data['Patron Information Response']['Charged Items Count'] = $response->getChargedItemsCount();
+        $data['Patron Information Response']['Fine Items Count'] = $response->getFineItemsCount();
+        $data['Patron Information Response']['Recall Items Count '] = $response->getRecallItemsCount();
+        $data['Patron Information Response']['Unavailable Holds Count '] = $response->getUnavailableHoldsCount();
+        $data['Patron Information Response']['Institution id'] = $response->getInstitutionId();
+        $data['Patron Information Response']['Patron identifier'] = $response->getPatronIdentifier();
+        $data['Patron Information Response']['Personal Name'] = $response->getPersonalName();
+        $data['Patron Information Response']['Hold Items Limit'] = $response->getHoldItemsLimit();
+        $data['Patron Information Response']['Overdue Items Limit '] = $response->getOverdueItemsLimit();
+        $data['Patron Information Response']['Charged Items Limit'] = $response->getChargedItemsLimit();
+        $data['Patron Information Response']['Valid Patron'] = $response->isValidPatron();
+        $data['Patron Information Response']['Valid Patron Password'] = $response->isValidPatronPassword();
+        $data['Patron Information Response']['Currency Type'] = $response->getCurrencyType();
+        $data['Patron Information Response']['Fee Amount'] = $response->getFeeAmount();
+        $data['Patron Information Response']['Fee Limit'] = $response->getFeeLimit();
+        $data['Patron Information Response']['Hold Items '] = $response->getHoldItems();
+        $data['Patron Information Response']['Overdue Items  '] = $response->getOverdueItems();
+        $data['Patron Information Response']['Charged Items '] = $response->getChargedItems();
+        $data['Patron Information Response']['Fine Items '] = $response->getFineItems();
+        $data['Patron Information Response']['Recall Items  '] = $response->getRecallItems();
+        $data['Patron Information Response']['Unavailable Holds Items '] = $response->getUnavailableHoldItems();
+        $data['Patron Information Response']['home address'] = $response->getHomeAddress();
+        $data['Patron Information Response']['e-mail address'] = $response->getEmailAddress();
+        $data['Patron Information Response']['home phone number'] = $response->getHomePhoneNumber();
+        $data['Patron Information Response']['Screen Message'] = $response->getScreenMessage();
+        $data['Patron Information Response']['Print Line'] = $response->getPrintLine();
 
     } else {
         echo "Invalid message format\n";

@@ -38,6 +38,6 @@ function getDataEndSession($message) {
 }
 
 // Sử dụng hàm
-$message = "3520230907    102307AOasa|AA123123|AD12|AY0AZF520";
-$result = getDataEndSession($message);
-print_r($result);
+// $message = "3520230907    102307AOasa|AA123123|AD12|AY0AZF520";
+// $result = getDataEndSession($message);
+// print_r($result);
