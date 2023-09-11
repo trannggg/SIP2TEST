@@ -2,16 +2,16 @@
 require_once 'getData.php';
 require_once 'saveToJson.php';
 require_once 'checkSum.php';
-
+require_once 'messageHandler.php';
 // Thiết lập giới hạn thời gian và thời gian chờ vô hạn
 set_time_limit(0);
 ini_set('default_socket_timeout', -1);
 
 // Tạo socket
 $socket = socket_create(AF_INET, SOCK_STREAM, 0);
-socket_bind($socket, '127.0.0.1', 12346);
+socket_bind($socket, '127.0.0.1', 12347);
 socket_listen($socket,5);
-echo "Server is listening on 127.0.0.1:12347\n";
+echo "Server is listening on 127.0.0.1:12346\n";
 
 // Chấp nhận kết nối
 $client_socket = socket_accept($socket);
@@ -52,9 +52,12 @@ while (true) {
                 print_r($data1);
                 saveToJson($data1);
                 // Phản hồi tới client
-                list($data, $checksum1) = explode("AY", $data);
-                $response = "Server received: $data";
-                socket_write($client_socket, $data, strlen($response));
+                // list($data, $checksum1) = explode("AY", $data);
+                // $response = "Server received: $data";
+                // socket_write($client_socket, $data, strlen($response));
+                $messageHandler = new messageHandler();
+                $response = $messageHandler->decode($data);
+                socket_write($client_socket, $response);
 
                 // In dữ liệu nhận được
                 echo "Response sent to client: $response\n";
@@ -70,5 +73,3 @@ while (true) {
 
 // Đóng kết nối socket con khi kết thúc
 // socket_close($client_socket);
-
-?>
