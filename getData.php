@@ -1,16 +1,4 @@
 <?php
-// require 'data/login.php';
-// require 'data/endSession.php';
-// require 'data/itemCheckin.php';
-// require 'data/itemCheckout.php';
-// require 'data/itemInformation.php';
-// require 'data/renewAllItems.php';
-// require 'data/renewItem.php';
-// require 'data/updateNotice.php';
-// require 'data/feePaid.php';
-// require 'data/patronStatus.php';
-// require 'data/patronInformation.php';
-// require 'data/patronInformationResponse.php';
 
 foreach (glob("data/*.php") as $filename) {
     require $filename;

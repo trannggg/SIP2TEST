@@ -1,5 +1,5 @@
 <?php
-require_once 'messages/patronInformation.php';
+require_once 'messages/patronStatus.php';
 function getDataPatronStatus($message)
 {
     $data['Patron Status'] = [];
