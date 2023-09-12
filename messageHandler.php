@@ -8,10 +8,8 @@ class messageHandler
 {
     public function decode($message)
     {
-        // get message type
         $msgcode = substr($message, 0, 2);
-        // $response = '100NUN19700101    010000AB|AO|AQ|';
-        $response = ini($msgcode)->testCaseDefault;
+        $response = ini($msgcode)->build();
         return $response;
     }
 }

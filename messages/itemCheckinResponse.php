@@ -1,9 +1,8 @@
 <?php
+// command code: 10
 class itemCheckinResponse
 {  
-    public $commandCode = '10';
-    public $testCaseDefault = '100NUN19700101    010000AB|AO|AQ|';
-    private $ok;
+    private $ok;    
     private $resensitize;
     private $magneticMedia;
     private $alert;
@@ -21,11 +20,12 @@ class itemCheckinResponse
 
     public function __construct()
     {
-        $this->ok = false;
-        $this->resensitize = false;
-        $this->magneticMedia = false;
-        $this->alert = false;
-        $this->transactionDate = new DateTime();
+        $this->ok = '0';
+        $this->resensitize = 'N';
+        $this->magneticMedia = 'U';
+        $this->alert = 'N';
+        $this->transactionDate = new DateTime('now', new DateTimeZone('Asia/Ho_Chi_Minh'));
+        $this->transactionDate = $this->transactionDate->format('Ymd    his');
         $this->institutionId = '';
         $this->itemIdentifier = '';
         $this->permanentLocation = '';
@@ -153,7 +153,7 @@ class itemCheckinResponse
         $this->patronIdentifier = $patronIdentifier;
     }
 
-    public function setOk($ok)
+    public function setOk(bool $ok)
     {
         $this->ok = $ok;
     }
@@ -166,5 +166,23 @@ class itemCheckinResponse
     public function setMagneticMedia($magneticMedia)
     {
         $this->magneticMedia = $magneticMedia;
+    }
+
+    public function build(): string {
+        $response = '10' . $this->ok . $this->resensitize . $this-> magneticMedia . $this->alert . $this->transactionDate . 'AO' . $this->institutionId . '|' . 'AB' . $this->itemIdentifier . '|' . 'AQ' . $this->permanentLocation . '|';
+        $optional = false;
+        $optionalIdArray = ['AJ', 'CL', 'CH', 'AF', 'AG'];
+        $index = 0;
+        foreach ($this as $key => $value) {
+            if ($key == 'titleIdentifier') {
+                $optional = true;
+            }
+            if ($optional) {
+                if ($value != '') {
+                    $response .= $optionalIdArray[$index] . $value . '|';
+                }
+            }
+        }
+        return $response;
     }
 }
