@@ -1,0 +1,53 @@
+Server is listening on 127.0.0.1:12346
+Client connected
+Received data: 09N20230912    16185120230912    161851AP3290|AOasa|ABxyz1234|AC|AY0AZEF02
+Array
+(
+    [Item Checkin] => Array
+        (
+            [No Block] => N
+            [Transaction Date] => 20230912    161851
+            [Return Date] => 20230912    161851
+            [Current Location] => 3290
+            [Institution ID] => asa
+            [Item Identifier (Barcode)] => xyz1234
+            [Terminal Password] => 
+        )
+
+)
+Dữ liệu đã được lưu vào tệp JSON thành công.
+Response sent to client: 100NUN19700101    010000AB|AO|AQ|
+Received data: 09N20230912    16185120230912    161851AP3290|AOasa|ABxyz1234|AC|AY1AZEF01
+Array
+(
+    [Item Checkin] => Array
+        (
+            [No Block] => N
+            [Transaction Date] => 20230912    161851
+            [Return Date] => 20230912    161851
+            [Current Location] => 3290
+            [Institution ID] => asa
+            [Item Identifier (Barcode)] => xyz1234
+            [Terminal Password] => 
+        )
+
+)
+Dữ liệu đã được lưu vào tệp JSON thành công.
+Response sent to client: 100NUN19700101    010000AB|AO|AQ|
+Received data: 09N20230912    16185220230912    161852AP3290|AOasa|ABxyz1234|AC|AY2AZEEFE
+Array
+(
+    [Item Checkin] => Array
+        (
+            [No Block] => N
+            [Transaction Date] => 20230912    161852
+            [Return Date] => 20230912    161852
+            [Current Location] => 3290
+            [Institution ID] => asa
+            [Item Identifier (Barcode)] => xyz1234
+            [Terminal Password] => 
+        )
+
+)
+Dữ liệu đã được lưu vào tệp JSON thành công.
+Response sent to client: 100NUN19700101    010000AB|AO|AQ|
