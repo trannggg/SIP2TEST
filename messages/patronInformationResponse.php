@@ -34,6 +34,22 @@ class PatronInformationResponse
     private $screenMessage;
     private $printLine;
 
+    public function __construct()
+    {
+        $this->patronStatus = '              ';
+        $this->language = '000';
+        $this->transactionDate = (new DateTime('now', new DateTimeZone('Asia/Ho_Chi_Minh')))->format('Ymd    his');
+        $this->holdItemsCount = '0000';
+        $this->overdueItemsCount = '0000';
+        $this->chargedItemsCount = '0000';
+        $this->fineItemsCount = '0000';
+        $this->recallItemsCount = '0000';
+        $this->unavailableHoldsCount = '0000';
+        $this->institutionId = '';
+        $this->patronIdentifier = '';
+        $this->personalName = '';
+    }
+
     public function getChargedItems()
     {
         return $this->chargedItems;
@@ -343,6 +359,29 @@ class PatronInformationResponse
     {
         $this->emailAddress = $emailAddress;
     }
-}
 
-?>
+    public function build(): string
+    {
+        $response = '64' . $this->patronStatus . $this->language . $this->transactionDate . $this->holdItemsCount . $this->overdueItemsCount . $this->chargedItemsCount . $this->fineItemsCount . $this->recallItemsCount . $this->unavailableHoldsCount . $this->institutionId . $this->patronIdentifier . $this->personalName;
+        $optional = false;
+        $optionalIdArray = ['AO', 'AA', 'AE', 'BZ', 'CA', 'CB', 'BL', 'CQ', 'BH', 'BV', 'CC', 'AS', 'AT', 'AU', 'AV', 'BU', 'CD', 'BD', 'BE', 'BF', 'AF', 'AG'];
+        $index = 0;
+        foreach ($this as $key => $value) {
+            if ($key == 'holdItemsLimit') {
+                $optional = true;
+            }
+            if ($optional) {
+                if ($value != '') {
+                    if ($index > 7 && $index < 14) {
+                        foreach ($value as $item) {
+                            $response .= $optionalIdArray[$index] . $item . '|';
+                        }
+                    } else {
+                        $response .= $optionalIdArray[$index] . $value . '|';
+                    }
+                }
+            }
+        }
+        return $response;
+    }
+}
