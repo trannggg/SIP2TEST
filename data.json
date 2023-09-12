@@ -1,9 +1,11 @@
 {
-    "Patron Status": {
-        "Language": "001",
-        "Transaction Date": "20230911    152910",
+    "Item Checkin": {
+        "No Block": "N",
+        "Transaction Date": "20230912    161852",
+        "Return Date": "20230912    161852",
+        "Current Location": "3290",
         "Institution ID": "asa",
-        "Patron Identifier": "xyz",
-        "Patron Password": "1234"
+        "Item Identifier (Barcode)": "xyz1234",
+        "Terminal Password": ""
     }
 }

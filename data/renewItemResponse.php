@@ -94,7 +94,7 @@ function getDataRenewResponse($message){
 }
 
 // Sử dụng hàm
-$message = "300NUN20230908    101704|AAxyz|ABxyz123|AH|AJ|AO|AY2AZF4BB";
-$result = getDataRenewResponse($message);
-print_r($result);
+// $message = "300NUN20230908    101704|AAxyz|ABxyz123|AH|AJ|AO|AY2AZF4BB";
+// $result = getDataRenewResponse($message);
+// print_r($result);
 ?>
