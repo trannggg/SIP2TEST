@@ -9,7 +9,7 @@ ini_set('default_socket_timeout', -1);
 
 // Tạo socket
 $socket = socket_create(AF_INET, SOCK_STREAM, 0);
-socket_bind($socket, '127.0.0.1', 12347);
+socket_bind($socket, '127.0.0.1', 12346);
 socket_listen($socket,5);
 echo "Server is listening on 127.0.0.1:12346\n";
 
