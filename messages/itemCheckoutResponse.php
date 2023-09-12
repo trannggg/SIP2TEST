@@ -22,6 +22,18 @@ class ItemCheckoutResponse
     private $screenMessage;
     private $printLine;
 
+    public function __construct() {
+        $this->ok = '0';
+        $this->renewalOk = 'N';
+        $this->magneticMedia = 'U';
+        $this->desensitize = 'U';
+        $this->transactionDate = (new DateTime('now', new DateTimeZone('Asia/Ho_Chi_Minh')))->format('Ymd    his');
+        $this->institutionId = '';
+        $this->itemIdentifier = '';
+        $this->titleIdentifier = '';
+        $this->dueDate = '';
+    }
+
     public function getCurrencyType()
     {
         return $this->currencyType;
@@ -211,5 +223,23 @@ class ItemCheckoutResponse
     {
         $this->currencyType = $currencyType;
     }
+
+    public function build(): string
+    {
+        $response = '12' . $this->ok . $this->renewalOk . $this->magneticMedia . $this->desensitize . $this->transactionDate . 'AO' . $this->institutionId . '|' . 'AA' . $this->patronIdentifier . 'AB' . $this->itemIdentifier . '|' . 'AJ' . $this->titleIdentifier . '|' . 'AH' . $this->dueDate . '|';
+        $optional = false;
+        $optionalIdArray = ['BT', 'CI', 'BH', 'BV', 'CK', 'CH', 'BK', 'AF', 'AG'];
+        $index = 0;
+        foreach ($this as $key => $value) {
+            if ($key == 'feeType') {
+                $optional = true;
+            }
+            if ($optional) {
+                if ($value != '') {
+                    $response .= $optionalIdArray[$index] . $value . '|';
+                }
+            }
+        }
+        return $response;
+    }
 }
-?>
