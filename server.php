@@ -1,18 +1,24 @@
 <?php
+session_start();
 require_once 'getData.php';
 require_once 'saveToJson.php';
 require_once 'checkSum.php';
 require_once 'messageHandler.php';
+
+
 // Thiết lập giới hạn thời gian và thời gian chờ vô hạn
 set_time_limit(0);
 ini_set('default_socket_timeout', -1);
-
+var_dump($argv);
+// var_dump($_SESSION);
+$ipaddress=isset($argv[1]) ?  $argv[1] : '127.0.0.1';
+$port=isset($argv[2]) ?  $argv[2] : '12345';
+$stopServer=isset($_SESSION['stopServer']) ? $_SESSION['stopServer'] : '1';
 // Tạo socket
 $socket = socket_create(AF_INET, SOCK_STREAM, 0);
-socket_bind($socket, '127.0.0.1', 12346);
+socket_bind($socket, $ipaddress, $port);
 socket_listen($socket,5);
-echo "Server is listening on 127.0.0.1:12346\n";
-
+echo "Server is listening on $ipaddress:$port\n";
 // Chấp nhận kết nối
 $client_socket = socket_accept($socket);
 echo "Client connected\n";
@@ -21,8 +27,9 @@ while (true) {
     try {
         // Nhận dữ liệu từ client
         $data = @socket_read($client_socket, 1024);
-
-
+        if ($stopServer==0){
+            break;
+        }
         if ($data === false) {
             $socket_error = socket_last_error($client_socket);
 
@@ -46,7 +53,6 @@ while (true) {
             // Tính checksum
             $checksum = applyChecksum($msgToChecksum);
             if (strcmp($checksum, $data)) {
-                $loginUserId = isset($loginFullUserID[1]) ? $loginFullUserID[1] : '';
                 // Xử lý dữ liệu
                 $data1 = getData($data);
                 print_r($data1);
@@ -70,6 +76,6 @@ while (true) {
         echo "Error: " . $e->getMessage() . "\n";
     }
 }
-
 // Đóng kết nối socket con khi kết thúc
-// socket_close($client_socket);
+ socket_close($client_socket);
+
