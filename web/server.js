@@ -12,7 +12,7 @@ function startServer(){
     }else {
         $.ajax({
             type: "POST",
-            url: 'test.php?action=startServer',
+            url: 'redirect.php?action=startServer',
             data: formData,
             processData: false,
             contentType: false,
