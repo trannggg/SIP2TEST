@@ -1,5 +1,5 @@
 <?php
-class LoginResponse {
+class loginResponse {
     private $ok;
 
     public function __construct() {

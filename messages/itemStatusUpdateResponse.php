@@ -1,6 +1,6 @@
 <?php
 
-class ItemStatusUpdateResponse {
+class itemStatusUpdateResponse {
     private $ok;
     private $transactionDate;
     private $itemIdentifier;

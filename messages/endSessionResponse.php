@@ -1,5 +1,5 @@
 <?php
-class EndSessionResponse
+class endSessionResponse
 {
     private $endSession;
     private $transactionDate;
