@@ -1,6 +1,6 @@
 <?php
 
-class RenewResponse
+class renewResponse
 {
 
     private $ok;

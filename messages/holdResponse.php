@@ -1,6 +1,6 @@
 <?php
 
-class HoldResponse
+class holdResponse
 {
 
     private $ok;

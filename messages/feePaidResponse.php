@@ -1,5 +1,5 @@
 <?php
-class FeePaidResponse
+class feePaidResponse
 {
     private $paymentAccepted;
     private $transactionDate;

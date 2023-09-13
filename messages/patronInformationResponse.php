@@ -1,6 +1,6 @@
 <?php
 
-class PatronInformationResponse
+class patronInformationResponse
 {
     private $patronStatus;
     private $language;

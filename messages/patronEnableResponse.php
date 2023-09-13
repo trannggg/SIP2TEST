@@ -1,6 +1,6 @@
 <?php
 
-class PatronEnableResponse
+class patronEnableResponse
 {
     private $patronStatus;
     private $language;

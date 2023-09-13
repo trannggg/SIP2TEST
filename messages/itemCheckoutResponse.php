@@ -1,6 +1,6 @@
 <?php
 
-class ItemCheckoutResponse
+class itemCheckoutResponse
 {
     private $ok;
     private $renewalOk;

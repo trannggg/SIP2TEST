@@ -1,6 +1,6 @@
 <?php
 
-class RenewAllResponse {
+class renewAllResponse {
 
     private $ok;
     private $renewedCount;

@@ -1,5 +1,5 @@
 <?php
-class ItemInformationResponse {
+class itemInformationResponse {
     private $circulationStatus;
     private $securityMarker;
     private $feeType;
