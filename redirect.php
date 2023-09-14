@@ -3,7 +3,7 @@ echo $_GET['action'];
 switch ($_GET['action']){
     case 'startServer': startServer();
         break;
-    case 'endServer':endServer();
+    case 'stopServer': stopServer();
         break;
 }
 function startServer(){
@@ -15,6 +15,6 @@ function startServer(){
     echo 'ok';
 
 }
-function endServer(){
+function stopServer(){
     $_SESSION['stopServer']='0';
 }
