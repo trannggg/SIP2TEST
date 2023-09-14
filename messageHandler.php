@@ -22,7 +22,7 @@ function ini($msgcode)
         case '23':
             return new patronStatusResponse();
         case '11':
-            return new checkoutResponse();
+            return new itemCheckoutResponse();
         case '97':
             return new ACSStatus();
         case '93':
