@@ -45,18 +45,20 @@
 <!--        <input type="button" value="Clear" id="clearBtn" name="clearBtn" onclick="javascript:eraseText();">-->
         <div class="col logs-right">Chọn ngày
             <input type="date" id="selectedDate"></input>
-            <button onclick="showMatchingFiles()">Hiển thị Tệp</button>
-            <ul id="fileList"></ul>
+            <button id="openPopup" onclick="showMatchingFiles()">Chọn Tệp</button>
         </div>
+    </div>
+    <div id="filePopup" class="popup">
+        <h5>Chọn tệp để hiển thị</h5>
+        <ul id="fileList">
+            <!-- Các tệp sẽ được thêm tự động bằng JavaScript -->
+        </ul>
     </div>
     <?php
     $logContent = "";
-
     if (file_exists("logs/log_20230913_092231.log")) {
         $logContent = file_get_contents("logs/log_20230913_092231.log");
     }
-
-
     ?>
     <div class="input-group logs-text">
         <textarea id="textarea" style="height: 418px;" class="form-control" aria-label="With textarea"  readonly autocomplete="off"></textarea>

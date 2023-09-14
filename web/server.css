@@ -28,3 +28,38 @@ body {
 .logs-left label {
     margin-left: 20px;
 }
+/* CSS cho popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+}
+.popup h5{
+    text-align: center;
+}
+/* CSS cho danh sách tệp */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: blue;
+}
+
+li:hover {
+    text-decoration: underline;
+}
+/* CSS cho danh sách tệp */
+#fileList {
+    max-height: 300px; /* Điều chỉnh chiều cao tối đa cho danh sách tệp */
+    overflow-y: auto; /* Kích hoạt thanh cuộn dọc khi danh sách vượt quá chiều cao tối đa */
+}

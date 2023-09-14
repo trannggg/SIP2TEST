@@ -22,13 +22,13 @@ function startServer(){
             }
         });
 
-        setInterval(readTextFile, 500);
+        setInterval(readTextFile, 1000);
     }
 }
 function stopServer(){
 
 }
-function readTextFile(file)
+function readTextFile(url)
 {
     var x = document.getElementById("autoScroll").checked; //if autoscrool is checked
     if(x==true){
@@ -39,7 +39,7 @@ function readTextFile(file)
         url: 'getLatestFile.php',
         type: 'POST',
         data: {
-            action: 'my_function'
+            action: 'getLatestFile'
         },
         success: function(data) {
             filePath = data;
@@ -54,10 +54,6 @@ function readTextFile(file)
             alert('Có lỗi xảy ra!');
         }
     });
-
-
-
-
 }
 
 
@@ -77,7 +73,7 @@ function showMatchingFiles() {
 
     var formData = new FormData();
     formData.append('formattedDate', formattedDate);
-    formData.append('action', 'my_function1');
+    formData.append('action', 'getFile');
     $.ajax({
         type: "POST",
         url: 'getLatestFile.php',
@@ -85,32 +81,52 @@ function showMatchingFiles() {
         processData: false,
         contentType: false,
         success: function (data) {
-            console.log(data);
+
+            var data = JSON.parse(data);
+            populateFileList(data);
 
         }
     });
 
-    console.log(formattedDate);
+}
 
-    // Lấy danh sách tất cả các tệp
-    var allFiles = ['log_20220101_120000.log', 'log_20220102_080000.log', 'log_20220103_153000.log']; // Thay thế bằng danh sách tệp thực tế
 
-    // Lọc và hiển thị các tệp phù hợp
-    var matchingFiles = allFiles.filter(function (fileName) {
-        return fileName.indexOf(formattedDate) !== -1;
-    });
+document.getElementById('openPopup').addEventListener('click', function () {
+    document.getElementById('filePopup').style.display = 'block';
+    showMatchingFiles();
+});
 
-    fileList.innerHTML = ''; // Xóa danh sách hiện tại
-
-    if (matchingFiles.length === 0) {
-        fileList.innerHTML = '<li>Không có tệp nào phù hợp.</li>';
-    } else {
-        matchingFiles.forEach(function (fileName) {
-            var listItem = document.createElement('li');
-            listItem.textContent = fileName;
-            fileList.appendChild(listItem);
-        });
+// Thêm sự kiện để tắt popup khi người dùng ấn ra ngoài
+document.addEventListener('click', function (event) {
+    const filePopup = document.getElementById('filePopup');
+    if (!filePopup.contains(event.target) && event.target !== document.getElementById('openPopup')) {
+        filePopup.style.display = 'none';
     }
+});
+
+function populateFileList(data) {
+    const fileList = document.getElementById('fileList');
+
+    fileList.innerHTML = '';
+
+    data.forEach(function (fileName) {
+        const fileType = fileName.split('.').pop();
+        const li = document.createElement('li');
+        li.textContent = fileName;
+
+        li.addEventListener('click', function () {
+            // displayFileContent(fileName, fileType);
+            filePath = 'logs/'+fileName;
+            $.ajax({
+                dataType: "text",
+                success : function (data) {
+                    $("#textarea").load(filePath);
+                }
+            });
+        });
+
+        fileList.appendChild(li);
+    });
 }
 
 
