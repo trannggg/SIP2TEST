@@ -39,14 +39,14 @@ function stopServer(){
     }else {
         $.ajax({
             type: "POST",
-            url: 'get?action=stopServer',
+            url: 'redirect?action=stopServer',
             data: formData,
             processData: false,
             contentType: false,
-            //success: function () {
-            //    $.get('startServer.php');
-            //    console.log('ok');
-            //}
+            success: function () {
+                $.get('startServer.php');
+                console.log('ok');
+            }
         });
 
         setInterval(readTextFile, 500);
