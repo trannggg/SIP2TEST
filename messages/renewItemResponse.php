@@ -1,5 +1,5 @@
 <?php
-class renewResponse {
+class renewItemResponse {
     private $ok;
     private $renewalOk;
     private $magneticMedia;

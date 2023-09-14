@@ -16,5 +16,5 @@ function startServer(){
 
 }
 function stopServer(){
-    $_SESSION['stopServer']='0';
+    file_put_contents('stopServer.php', '<?php echo 0; ?>');
 }

@@ -31,6 +31,7 @@ while (true) {
     try {
         // Nhận dữ liệu từ client
         $stopServer = file_get_contents("http://localhost/SIP2TEST/stopServer.php");
+        file_put_contents("stopServer.php", '<?php echo 1; ?>');
         print_r($stopServer);
         $data = @socket_read($client_socket, 1024);
         if ($stopServer==0){
