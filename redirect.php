@@ -1,5 +1,4 @@
 <?php
-$_GET['action']=isset($_GET['action']) ?  $_GET['action'] : '127.0.0.1';
 echo $_GET['action'];
 switch ($_GET['action']){
     case 'startServer': startServer();

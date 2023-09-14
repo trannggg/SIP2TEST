@@ -21,3 +21,10 @@ body {
 .logs-text{
     padding-top: 20px;
 }
+.logs-left{
+    display: flex;
+    align-items: center;
+}
+.logs-left label {
+    margin-left: 20px;
+}
