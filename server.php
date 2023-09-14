@@ -52,7 +52,7 @@ while (true) {
         } elseif (empty($data)) {
             break;
         } else {
-            echo "\nCommand message: $data\n";
+            echo "\n--->Command message: $data\n";
 
             // Tách dữ liệu và checksum từ chuỗi
             $msgToChecksumFull = explode('AZ', $data);
@@ -74,7 +74,7 @@ while (true) {
                 socket_write($client_socket, $response);
 
                 // In dữ liệu nhận được
-                echo "\nResponse: $response\n";
+                echo "\n<---Response message: $response\n";
             } else {
                 echo "\nError Checksum ";
             }

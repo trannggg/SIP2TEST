@@ -1,3 +1,4 @@
+var intervalId;
 function startServer(){
     var ipaddress=$('#ipaddress').val();
     var port=$('#port').val();
@@ -22,7 +23,7 @@ function startServer(){
             }
         });
 
-        setInterval(readTextFile, 1000);
+        intervalId = setInterval(readTextFile, 1000);
     }
 }
 function stopServer(){
@@ -44,12 +45,8 @@ function stopServer(){
             processData: false,
             contentType: false,
             success: function () {
-                $.get('startServer.php');
-                console.log('ok');
             }
         });
-
-        setInterval(readTextFile, 500);
     }
 }
 function readTextFile(url)
@@ -145,6 +142,7 @@ function populateFileList(data) {
                 dataType: "text",
                 success : function (data) {
                     $("#textarea").load(filePath);
+                    clearInterval(intervalId);
                 }
             });
         });
