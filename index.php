@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="web/server.js"></script>
+
 </head>
 
 <body>
@@ -37,13 +37,32 @@
             </div>
     </div>
     <div class="row logs">
-        <div class="col"><h4>Logs</h4></div>
-        <div class="col logs-right">Chọn ngày <input type="date"></input></div>
+        <div class="col logs-left">
+            <h4>Logs</h4>
+            <label><input type="checkbox" value="AutoScroll" id="autoScroll" label="Auto Scroll"checked>    Auto-Scroll</label>
+        </div>
+
+<!--        <input type="button" value="Clear" id="clearBtn" name="clearBtn" onclick="javascript:eraseText();">-->
+        <div class="col logs-right">Chọn ngày
+            <input type="date" id="selectedDate"></input>
+            <button onclick="showMatchingFiles()">Hiển thị Tệp</button>
+            <ul id="fileList"></ul>
+        </div>
     </div>
+    <?php
+    $logContent = "";
+
+    if (file_exists("logs/log_20230913_092231.log")) {
+        $logContent = file_get_contents("logs/log_20230913_092231.log");
+    }
+
+
+    ?>
     <div class="input-group logs-text">
-        <textarea style="height: 418px;" class="form-control" aria-label="With textarea"></textarea>
+        <textarea id="textarea" style="height: 418px;" class="form-control" aria-label="With textarea"  readonly autocomplete="off"></textarea>
     </div>
 </div>
+<script src="web/server.js"></script>
 </body>
 
 
