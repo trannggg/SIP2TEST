@@ -40,7 +40,7 @@ function stopServer(){
     }else {
         $.ajax({
             type: "POST",
-            url: 'redirect?action=stopServer',
+            url: 'redirect.php?action=stopServer',
             data: formData,
             processData: false,
             contentType: false,
