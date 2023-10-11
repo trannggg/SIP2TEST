@@ -4,6 +4,7 @@ require_once 'getData.php';
 require_once 'saveToJson.php';
 require_once 'checkSum.php';
 require_once 'messageHandler.php';
+require_once 'api.php';
 
 // Thiết lập giới hạn thời gian và thời gian chờ vô hạn
 set_time_limit(0);
@@ -62,13 +63,15 @@ while (true) {
 
             if (strcmp($checksum, $data)) {
                 // Xử lý dữ liệu
-                $data1 = getData($data);
+//                $data1 = getData($data);
+                $data2 = callAPI($data);
+
 //                print_r($data1);
-                saveToJson($data1);
+//                saveToJson($data1);
                 // Phản hồi tới client
-                // list($data, $checksum1) = explode("AY", $data);
-                // $response = "Server received: $data";
-                // socket_write($client_socket, $data, strlen($response));
+                // list($getData, $checksum1) = explode("AY", $getData);
+                // $response = "Server received: $getData";
+                // socket_write($client_socket, $getData, strlen($response));
                 $messageHandler = new messageHandler();
                 $response = $messageHandler->decode($data);
                 socket_write($client_socket, $response);
@@ -85,5 +88,6 @@ while (true) {
     }
 }
 // Đóng kết nối socket con khi kết thúc
+echo "\nClient disconnected\n";
  socket_close($client_socket);
 

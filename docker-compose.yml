@@ -3,4 +3,11 @@ services:
   web:
     build: .
     ports:
-      - "8080:80"
+      - "8080:80"   # Ánh xạ cổng 8080 của máy host vào cổng 8080 của container
+      - "12345:12345" # Ánh xạ cổng 12345 của máy host vào cổng 12345 của container
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge

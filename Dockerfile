@@ -7,7 +7,7 @@ RUN docker-php-ext-install sockets
 COPY . /var/www/html
 
 # Mở cổng 80 để Apache lắng nghe
-EXPOSE 80
+EXPOSE 80 12345
 
 RUN chmod 777 /var/www/html/*
 
