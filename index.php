@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,12 +54,6 @@
             <!-- Các tệp sẽ được thêm tự động bằng JavaScript -->
         </ul>
     </div>
-    <?php
-    $logContent = "";
-    if (file_exists("logs/log_20230913_092231.log")) {
-        $logContent = file_get_contents("logs/log_20230913_092231.log");
-    }
-    ?>
     <div class="input-group logs-text">
         <textarea id="textarea" style="height: 418px;" class="form-control" aria-label="With textarea"  readonly autocomplete="off"></textarea>
     </div>

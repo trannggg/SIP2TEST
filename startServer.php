@@ -3,6 +3,8 @@ session_start();
 $ipaddress = $_SESSION['ipaddress'];
 $port = $_SESSION['port'];
 
+
+
 // Lấy ngày và giờ hiện tại dưới dạng timestamp
 $currentTimestamp = time();
 

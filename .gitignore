@@ -1,5 +1,5 @@
 test.php
-data/driveMapping.php
+getData/driveMapping.php
 server-test.php
 getData-test.php
 data.json

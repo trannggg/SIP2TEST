@@ -1,6 +1,6 @@
 <?php
 
-foreach (glob("data/*.php") as $filename) {
+foreach (glob("getData/*.php") as $filename) {
     require $filename;
 }
 
