@@ -1,0 +1,65 @@
+body {
+    background-color: #F0F0F0 !important;
+}
+.header h1 {
+    border-bottom: 1px solid #AEAEAE;
+}
+.form-server{
+    border: 1px solid #aeaeae;
+    padding: 10px;
+}
+.logs-right{
+    justify-content: right;
+    text-align: right;
+}
+.logs{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-top: 50px;
+    border-bottom: 1px solid #AEAEAE;
+}
+.logs-text{
+    padding-top: 20px;
+}
+.logs-left{
+    display: flex;
+    align-items: center;
+}
+.logs-left label {
+    margin-left: 20px;
+}
+/* CSS cho popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+}
+.popup h5{
+    text-align: center;
+}
+/* CSS cho danh sách tệp */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: blue;
+}
+
+li:hover {
+    text-decoration: underline;
+}
+/* CSS cho danh sách tệp */
+#fileList {
+    max-height: 300px; /* Điều chỉnh chiều cao tối đa cho danh sách tệp */
+    overflow-y: auto; /* Kích hoạt thanh cuộn dọc khi danh sách vượt quá chiều cao tối đa */
+}

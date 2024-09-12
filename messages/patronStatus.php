@@ -66,7 +66,7 @@ class patronStatus
         return $this->transactionDate;
     }
 
-    public function setTransactionDate(DateTime $transactionDate)
+    public function setTransactionDate($transactionDate)
     {
         $this->transactionDate = $transactionDate;
     }
@@ -86,7 +86,7 @@ class patronStatus
         $this->patronIdentifier = $patronIdentifier;
     }
 
-    public function setLanguage(Language $language)
+    public function setLanguage($language)
     {
         $this->language = $language;
     }

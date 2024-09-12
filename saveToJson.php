@@ -7,7 +7,7 @@ function saveToJson($data){
     $currentDirectory = getcwd();
 
     // Đường dẫn và tên tệp JSON bạn muốn lưu (tại thư mục hiện tại)
-    $filePath = $currentDirectory . '/data.json';
+    $filePath = $currentDirectory . 'data/getData.json';
 
     // Lưu chuỗi JSON vào tệp
     if (file_put_contents($filePath, $jsonData)) {

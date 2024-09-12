@@ -1,29 +1,30 @@
 <?php
-class endSessionResponse
+class feePaidResponse
 {
-    private $endSession;
+    private $paymentAccepted;
     private $transactionDate;
     private $institutionId;
     private $patronIdentifier;
+    private $transactionId;
     private $screenMessage;
     private $printLine;
 
     public function __construct()
     {
-        $this->endSession = 'N';
+        $this->paymentAccepted = 'N';
         $this->transactionDate = (new DateTime('now', new DateTimeZone('Asia/Ho_Chi_Minh')))->format('Ymd    his');
         $this->institutionId = '';
         $this->patronIdentifier = '';
     }
 
-    public function isEndSession()
+    public function isPaymentAccepted()
     {
-        return $this->endSession;
+        return $this->paymentAccepted;
     }
 
-    public function setEndSession($endSession)
+    public function setPaymentAccepted($paymentAccepted)
     {
-        $this->endSession = $endSession;
+        $this->paymentAccepted = $paymentAccepted;
     }
 
     public function getTransactionDate()
@@ -56,6 +57,16 @@ class endSessionResponse
         $this->patronIdentifier = $patronIdentifier;
     }
 
+    public function getTransactionId()
+    {
+        return $this->transactionId;
+    }
+
+    public function setTransactionId($transactionId)
+    {
+        $this->transactionId = $transactionId;
+    }
+
     public function getScreenMessage()
     {
         return $this->screenMessage;
@@ -78,12 +89,12 @@ class endSessionResponse
 
     public function build(): string
     {
-        $response = '36' . $this->endSession . $this->transactionDate . 'AO' . $this->institutionId . '|' . 'AA' . $this->patronIdentifier . '|';
+        $response = '38' . $this->paymentAccepted . $this->transactionDate . 'AO' . $this->institutionId . '|' . 'AA' . $this->patronIdentifier . '|';
         $optional = false;
-        $optionalIdArray = ['AF', 'AG'];
+        $optionalIdArray = ['BK', 'AF', 'AG'];
         $index = 0;
         foreach ($this as $key => $value) {
-            if ($key == 'screenMessage') {
+            if ($key == 'transactionId') {
                 $optional = true;
             }
             if ($optional) {

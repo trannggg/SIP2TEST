@@ -1,5 +1,5 @@
 <?php
-class ItemInformationResponse {
+class itemInformationResponse {
     private $circulationStatus;
     private $securityMarker;
     private $feeType;
@@ -19,6 +19,15 @@ class ItemInformationResponse {
     private $itemProperties;
     private $screenMessage;
     private $printLine;
+
+    public function __construct() {
+        $this->circulationStatus = '00';
+        $this->securityMarker = '00';
+        $this->feeType = '00';
+        $this->transactionDate = (new DateTime('now', new DateTimeZone('Asia/Ho_Chi_Minh')))->format('Ymd    his');
+        $this->itemIdentifier = '';
+        $this->titleIdentifier = '';
+    }
 
     public function getCirculationStatus() {
         return $this->circulationStatus;
@@ -171,6 +180,23 @@ class ItemInformationResponse {
     public function setCirculationStatus($circulationStatus) {
         $this->circulationStatus = $circulationStatus;
     }
-}
 
-?>
+    public function build(): string
+    {
+        $response = '18' . $this->circulationStatus . $this->securityMarker . $this->feeType . $this->transactionDate . 'AB' . $this->itemIdentifier . '|' . 'AJ' . $this->titleIdentifier . '|';
+        $optional = false;
+        $optionalIdArray = ['CF', 'AH', 'CJ', 'CM', 'BG', 'BH', 'BV', 'CK', 'AQ', 'AP', 'CH', 'AF', 'AG'];
+        $index = 0;
+        foreach ($this as $key => $value) {
+            if ($key == 'holdQueueLength') {
+                $optional = true;
+            }
+            if ($optional) {
+                if ($value != '') {
+                    $response .= $optionalIdArray[$index] . $value . '|';
+                }
+            }
+        }
+        return $response;
+    }
+}

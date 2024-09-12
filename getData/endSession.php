@@ -25,7 +25,7 @@ function getDataEndSession($message) {
         $fullPatronPassword = explode('AD', $components[2]);
         $endSession->setPatronPassword(isset($fullPatronPassword[1]) ? $fullPatronPassword[1] : '');
 
-        // Add EndSession object to the data array
+        // Add EndSession object to the getData array
         $data['End Session']['Transaction Date'] = $endSession->getTransactionDate();
         $data['End Session']['Institution ID'] = $endSession->getInstitutionId();
         $data['End Session']['Patron Identifier'] = $endSession->getPatronIdentifier();

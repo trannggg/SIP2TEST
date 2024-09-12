@@ -32,7 +32,7 @@ function getDataUpdateNotice($message){
         $updateNoticeFullTerminalPassword=explode('AC', $components[3]);
         $updateNotice->setNoticeTerminalPassword(isset($updateNoticeFullTerminalPassword[1]) ? $updateNoticeFullTerminalPassword[1] : '');
 
-        // Retrieve the data from the updateNotice object
+        // Retrieve the getData from the updateNotice object
         $data['Update Notice']['Notice Status'] = $updateNotice->getNoticeStatus();
         $data['Update Notice']['Transaction Date'] = $updateNotice->getTransactionDate();
         $data['Update Notice']['Delivery Date'] = $updateNotice->getDeliveryDate();
